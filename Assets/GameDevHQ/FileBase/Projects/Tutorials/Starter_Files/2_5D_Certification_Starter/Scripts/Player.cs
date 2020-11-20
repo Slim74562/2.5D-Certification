@@ -7,10 +7,11 @@ public class Player : MonoBehaviour
     private float _speed = 9.0f;
     private float _gravity = 30.0f;
     private Vector3 _direction;
-    private float _jumpHeight = 20f;
+    private float _jumpHeight = 16f;
     private CharacterController _controller;
     private Animator _anim;
-    private bool _jumping;
+    private bool _isJumping;
+    private bool _isHanging;
 
     // Start is called before the first frame update
     void Start()
@@ -31,15 +32,21 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CalculateMovement();
+
+    }
+
+    void CalculateMovement()
+    {
         if (_controller.isGrounded)
         {
             float horizontal = Input.GetAxisRaw("Horizontal"); // get axis raw will make it automatically go to 1, -1, or 0 right away instead of gradually going to them
             _anim.SetFloat("Speed", Mathf.Abs(horizontal));
 
-            if (_jumping)
+            if (_isJumping)
             {
-                _jumping = false;
-                _anim.SetBool("IsJumping", _jumping);
+                _isJumping = false;
+                _anim.SetBool("IsJumping", _isJumping);
             }
 
             _direction = new Vector3(0, 0, horizontal) * _speed;
@@ -56,17 +63,17 @@ public class Player : MonoBehaviour
             if (horizontal > 0)
             {
                 transform.rotation = Quaternion.LookRotation(Vector3.forward);
-            } 
+            }
             else if (horizontal < 0)
             {
                 transform.rotation = Quaternion.LookRotation(Vector3.back);
             }
-                            
+
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                _jumping = true;
-                _anim.SetBool("IsJumping", _jumping);
-                _direction.y += _jumpHeight;                
+                _isJumping = true;
+                _anim.SetBool("IsJumping", _isJumping);
+                _direction.y += _jumpHeight;
             }
         }
         else
@@ -74,5 +81,12 @@ public class Player : MonoBehaviour
             _direction.y -= _gravity * Time.deltaTime;
         }
         _controller.Move(_direction * Time.deltaTime);
+    }
+
+    public void GrabLedge()
+    {
+        _isHanging = true;
+        _anim.SetBool("IsHanging", _isHanging);
+        _controller.enabled = false;
     }
 }

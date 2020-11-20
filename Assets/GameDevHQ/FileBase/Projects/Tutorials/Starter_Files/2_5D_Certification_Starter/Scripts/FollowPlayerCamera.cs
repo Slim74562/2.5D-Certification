@@ -19,7 +19,7 @@ public class FollowPlayerCamera : MonoBehaviour
     void Update()
     {
         float z = _player.transform.position.z;
-        float y = _player.transform.position.y + 3;
+        float y = _player.transform.position.y + 4;
         this.transform.position = new Vector3(transform.position.x, y, z);
     }
 }
