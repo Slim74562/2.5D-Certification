@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Ledge : MonoBehaviour
 {
+    [SerializeField]
+    private float _hangDistance = 0.5f;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ledge_Grab_Checker"))
@@ -12,7 +15,7 @@ public class Ledge : MonoBehaviour
 
             if (player != null)
             {
-                player.GrabLedge();
+                player.GrabLedge(_hangDistance);
             }
         }
     }

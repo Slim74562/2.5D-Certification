@@ -12,8 +12,7 @@ public class Player : MonoBehaviour
     private Animator _anim;
     private bool _isJumping;
     private bool _isHanging;
-    [SerializeField]
-    private float _hangDistance = 0.5f;
+    private bool _isClimbing;
 
     // Start is called before the first frame update
     void Start()
@@ -34,8 +33,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ClimbLedge();
         CalculateMovement();
-
     }
 
     void CalculateMovement()
@@ -71,12 +70,13 @@ public class Player : MonoBehaviour
                 transform.rotation = Quaternion.LookRotation(Vector3.back);
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKey(KeyCode.Space))
             {
+
+                _direction.y += _jumpHeight;
                 _isJumping = true;
                 _anim.SetBool("IsJumping", _isJumping);
-                _direction.y += _jumpHeight;
-            }
+            }            
         }
         else
         {
@@ -85,11 +85,33 @@ public class Player : MonoBehaviour
         _controller.Move(_direction * Time.deltaTime);
     }
 
-    public void GrabLedge()
+    private void ClimbLedge()
     {
+        if (_isHanging && Input.GetKeyDown(KeyCode.E))
+        {
+            _isClimbing = true;
+            _anim.SetBool("IsClimbing", _isClimbing);
+            _isHanging = false;
+        }
+    }
+
+    public void GrabLedge(float hangDistance)
+    {
+        _controller.enabled = false;
         _isHanging = true;
         _anim.SetBool("IsHanging", _isHanging);
-        _controller.enabled = false;
-        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + _hangDistance);
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + hangDistance);
+    }
+
+    public void LedgeClimbComplete()
+    {
+        transform.position = new Vector3(transform.position.x, transform.position.y + 4.68417f, transform.position.z + 1.2906f);
+        _isHanging = false;
+        _isClimbing = false;
+        _isJumping = false;
+        _anim.SetBool("IsJumping", _isJumping);
+        _anim.SetBool("IsHanging", _isHanging);
+        _anim.SetBool("IsClimbing", _isClimbing);
+        _controller.enabled = true;
     }
 }

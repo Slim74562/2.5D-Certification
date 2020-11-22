@@ -56,8 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\Player.cs" />
-    <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\FollowPlayerCamera.cs" />
     <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\Ledge.cs" />
+    <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\FollowPlayerCamera.cs" />
+    <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\Animation Scripts\ClimbUpBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GameDevHQ\FileBase\Plugin\Filebase.dll" />
