@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     private Animator _anim;
     private bool _isJumping;
     private bool _isHanging;
+    [SerializeField]
+    private float _hangDistance = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -88,5 +90,6 @@ public class Player : MonoBehaviour
         _isHanging = true;
         _anim.SetBool("IsHanging", _isHanging);
         _controller.enabled = false;
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + _hangDistance);
     }
 }

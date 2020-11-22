@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class FollowPlayerCamera : MonoBehaviour
 {
@@ -18,8 +20,12 @@ public class FollowPlayerCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float z = _player.transform.position.z;
+        float z = _player.transform.position.z + 2f;
         float y = _player.transform.position.y + 4;
         this.transform.position = new Vector3(transform.position.x, y, z);
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 }

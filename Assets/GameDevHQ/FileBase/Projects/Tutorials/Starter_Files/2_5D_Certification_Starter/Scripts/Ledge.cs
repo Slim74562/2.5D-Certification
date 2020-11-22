@@ -8,7 +8,7 @@ public class Ledge : MonoBehaviour
     {
         if (other.CompareTag("Ledge_Grab_Checker"))
         {
-            var player = other.GetComponentInParent<Player>();
+            Player player = other.GetComponentInParent<Player>();
 
             if (player != null)
             {
