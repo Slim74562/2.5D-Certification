@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     private bool _isJumping;
     private bool _isHanging;
     private bool _isClimbing;
+    private bool _isRolling;
 
     // Start is called before the first frame update
     void Start()
@@ -54,6 +55,11 @@ public class Player : MonoBehaviour
                 _isJumping = false;
                 _anim.SetBool("IsJumping", _isJumping);
             }
+            if (_isRolling)
+            {
+                _isRolling = false;
+                _anim.SetBool("IsRolling", _isRolling);
+            }
 
             _direction = new Vector3(0, 0, horizontal) * _speed;
 
@@ -81,13 +87,26 @@ public class Player : MonoBehaviour
                 _direction.y += _jumpHeight;
                 _isJumping = true;
                 _anim.SetBool("IsJumping", _isJumping);
-            }            
+            }  
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                _isRolling = true;
+                _anim.SetBool("IsRolling", _isRolling);
+                _controller.enabled = false;
+            }
         }
         else
         {
             _direction.y -= _gravity * Time.deltaTime;
         }
         _controller.Move(_direction * Time.deltaTime);
+    }
+
+    public void RollReset()
+    {
+        _isRolling = false;
+        _anim.SetBool("IsRolling", _isRolling);
+        _controller.enabled = true;
     }
 
     private void ClimbLedge()
