@@ -57,7 +57,6 @@
   <ItemGroup>
     <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\Player.cs" />
     <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\Ledge.cs" />
-    <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\FollowPlayerCamera.cs" />
     <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\Animation Scripts\ClimbUpBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -612,6 +611,9 @@
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Cinemachine">
+      <HintPath>Library\ScriptAssemblies\Cinemachine.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Shaders">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
     </Reference>
@@ -648,6 +650,9 @@
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+      <HintPath>Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
     </Reference>
@@ -662,12 +667,6 @@
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Cinemachine">
-      <HintPath>Library\ScriptAssemblies\Cinemachine.dll</HintPath>
-    </Reference>
-    <Reference Include="com.unity.cinemachine.editor">
-      <HintPath>Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
