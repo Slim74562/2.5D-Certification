@@ -16,11 +16,11 @@ public class Lift : MonoBehaviour
     void Start()
     {
         _originPos = transform.position;
-        _lowerPos = new Vector3(transform.position.x, transform.position.y - _movement, transform.position.z);        
+        _lowerPos = new Vector3(transform.position.x, (transform.position.y - _movement), transform.position.z);        
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (_moveDown)
         {            
