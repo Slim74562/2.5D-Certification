@@ -7,8 +7,7 @@ public class MovingPlatform : MonoBehaviour
     private Vector3 _startPos, _endPos;
     private float _movement = 120f;
     private bool _isRight = false;
-    [SerializeField]
-    private float _speed = 5f;
+    private float _speed = 10f;
     private bool _isMoving = true;
 
     // Start is called before the first frame update

@@ -30,6 +30,7 @@ public class Ladder : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.LogError("y scale = " + transform.localScale.y);
             other.GetComponent<Player>().SetLadderClimb(false, transform.position, transform.localScale.y);
             _anim.SetBool("IsLadderClimbing", false);
         }

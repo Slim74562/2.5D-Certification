@@ -7,6 +7,7 @@ TagManager:
   - Ledge_Grab_Checker
   - Lift_Floor
   - Lift_Door
+  - Ladder
   layers:
   - Default
   - TransparentFX

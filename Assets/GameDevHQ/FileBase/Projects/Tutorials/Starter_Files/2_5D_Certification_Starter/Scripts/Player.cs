@@ -134,7 +134,7 @@ public class Player : MonoBehaviour
         _isLadderClimbing = isLadderClimbing;    
         if (_isLadderClimbing)
         {
-            if (ladderPos.y + (ySize / 2) > transform.position.y)
+            if (ladderPos.y + (ySize / 2) >= transform.position.y)
             {
                 _climbUp = true;
             }
@@ -142,7 +142,7 @@ public class Player : MonoBehaviour
             {
                 _climbUp = false;
             }
-        }        
+        }
     }
 
     IEnumerator SpeedPowerDown()
@@ -153,7 +153,7 @@ public class Player : MonoBehaviour
 
     public void SpeedPowerup()
     {
-        _speed *= 2;
+        _speed *= 3;
         StartCoroutine(SpeedPowerDown());
     }
 
