@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
     {
         ClimbLedge();
         CalculateMovement();
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) || transform.position.y < -50)
         {
             SceneManager.LoadScene(0);
         }
@@ -103,6 +103,17 @@ public class Player : MonoBehaviour
         {
             _controller.Move(_direction * Time.deltaTime);
         }
+    }
+
+    IEnumerator SpeedPowerDown()
+    {
+        yield return new WaitForSeconds(10f);
+        _speed /= 2;
+    }
+
+    public void SpeedPowerup()
+    {
+        _speed *= 2;        
     }
 
     public void RollReset()

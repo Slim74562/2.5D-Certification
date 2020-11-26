@@ -55,16 +55,17 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\Player.cs" />
-    <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\Ledge.cs" />
-    <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\Lift.cs" />
-    <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\Animation Scripts\ClimbUpBehavior.cs" />
-    <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\Animation Scripts\RollAnimBehavior.cs" />
-    <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\LiftDoor.cs" />
-    <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\UpperDoor.cs" />
     <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\LowerDoor.cs" />
+    <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\Player.cs" />
+    <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\UpperDoor.cs" />
+    <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\Ledge.cs" />
+    <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\LiftDoor.cs" />
+    <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\Lift.cs" />
     <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\MiddleDoor.cs" />
+    <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\Animation Scripts\ClimbUpBehavior.cs" />
     <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\MovingPlatform.cs" />
+    <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\Animation Scripts\RollAnimBehavior.cs" />
+    <Compile Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2_5D_Certification_Starter\Scripts\SpeedPickup.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GameDevHQ\FileBase\Plugin\Filebase.dll" />
