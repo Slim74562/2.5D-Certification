@@ -4,95 +4,167 @@ using UnityEngine;
 
 public class Lift : MonoBehaviour
 {
-    private bool _moveDown;
-    private bool _isMoving;
-    private bool _isUp;
+    private bool _isMoving = false;
     private Vector3 _originPos;
     private Vector3 _lowerPos;
+    private Vector3 _middlePos;
     [SerializeField]
     private float _movement = 38f;
+    [SerializeField]
+    private float _middleMove = 15f;
     [SerializeField]
     private float _speed;
     LiftDoor _liftDoor;
     LowerDoor _lowerDoor;
     UpperDoor _upperDoor;
+    MiddleDoor _middleDoor;
+    [SerializeField]
+    private int _floor = 1;
+    private GameObject _rightPanel;
+    private bool _isReady = false;
 
     // Start is called before the first frame update
     void Start()
     {
         _originPos = transform.position;
         _lowerPos = new Vector3(_originPos.x, (_originPos.y - _movement), _originPos.z);
+        _middlePos = new Vector3(_originPos.x, (_originPos.y - _middleMove), _originPos.z);
+        
         _liftDoor = GetComponentInChildren<LiftDoor>();
         _lowerDoor = GameObject.Find("Lower_Door").GetComponent<LowerDoor>();
         _upperDoor = GameObject.Find("Upper_Door").GetComponent<UpperDoor>();
+        _middleDoor = GameObject.Find("Middle_Door").GetComponent<MiddleDoor>();
+        _rightPanel = GameObject.Find("Scifi_Floors_01");
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (_moveDown)
+        Vector3 floorStop;
+        float yDifference = 0;
+        if (_floor == 0 && _isMoving)
         {
-            if (transform.position.y <= _lowerPos.y)
+            yDifference = _originPos.y - transform.position.y;
+            if (Mathf.Abs(yDifference) < 0.01)
             {
-                transform.position = _lowerPos;
+                transform.position = _originPos;
+            }
+            if (transform.position.y == _originPos.y)
+            {               
                 _liftDoor.OpenDoor();
-                _lowerDoor.OpenDoor();
-                if (_isMoving)
-                {
-                    _isMoving = false;
-                    _isUp = false;
-                }
+                _upperDoor.OpenDoor();
+                _isMoving = false;
+                _isReady = true;
+            }
+            else
+            {
+                _liftDoor.CloseDoor();
+                _lowerDoor.CloseDoor();
+                _upperDoor.CloseDoor();
+                _middleDoor.CloseDoor();
+            }
+        }
+        else if (_floor == 1 && _isMoving)
+        {
+            yDifference = _middlePos.y - transform.position.y;
+            if (Mathf.Abs(yDifference) < 0.1)
+            {
+                transform.position = _middlePos;
+            }
+            if (transform.position.y == _middlePos.y)
+            {
+                _middleDoor.OpenDoor();
+                _rightPanel.SetActive(false);
+                _isMoving = false;
+                _isReady = true;
             }
             else
             {
                 _upperDoor.CloseDoor();
-                _isMoving = true;
-                transform.Translate(Vector3.down * _speed * Time.deltaTime);
+                _lowerDoor.CloseDoor();
+                _middleDoor.CloseDoor();
                 _liftDoor.CloseDoor();
             }
         }
-        else
+        else if (_floor == 2 && _isMoving)
         {
-            if (transform.position.y >= _originPos.y)
+            yDifference = _lowerPos.y - transform.position.y;
+            if (Mathf.Abs(yDifference) < 0.1)
             {
-                transform.position = _originPos;
+                transform.position = _lowerPos;
+            }
+            if (transform.position.y == _lowerPos.y)
+            {
                 _liftDoor.OpenDoor();
-                _upperDoor.OpenDoor();
-                if (_isMoving)
-                {
-                    _isMoving = false;
-                    _isUp = true;
-                }
+                _lowerDoor.OpenDoor();
+                _isMoving = false;
+                _isReady = true;
             }
             else
             {
-                transform.Translate(Vector3.up * _speed * Time.deltaTime);
-                _liftDoor.CloseDoor();
-                _isMoving = true;
+                _rightPanel.SetActive(true);
+                _upperDoor.CloseDoor();
+                _middleDoor.CloseDoor();
                 _lowerDoor.CloseDoor();
+                _liftDoor.CloseDoor();
             }
         }
+        if (Mathf.Abs(yDifference) > 1)
+        {
+            if (yDifference < -1)
+            {
+                yDifference = -1;
+            }
+            else
+            {
+                yDifference = 1;
+            }
+        }
+        floorStop = new Vector3(0, yDifference, 0);
+        transform.Translate(floorStop * _speed * Time.deltaTime);
     }
 
     IEnumerator ElevatorCooldown()
     {
         yield return new WaitForSeconds(0.5f);
-        _moveDown = !_moveDown;
-        yield return new WaitForSeconds(0.5f);
         _isMoving = true;
-
     }
 
-    public bool IsLiftUp()
+    public int GetFloorNumber()
     {
-        return _isUp;
+        return _floor;
     }
 
-    public void CallLift()
+    public void CallLift(int floor)
     {
+        _floor = floor;
         if (!_isMoving)
         {
             StartCoroutine(ElevatorCooldown());
+        }
+    }
+    
+    private void CallLift()
+    {
+        if (!_isMoving)
+        {
+            if (_floor + 1 > 2)
+            {
+                _floor = 0;
+            }
+            else
+            {
+                _floor++;
+            }
+        }
+        CallLift(_floor);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            _isReady = true;
         }
     }
 
@@ -100,8 +172,9 @@ public class Lift : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKey(KeyCode.E) && _isReady)
             {
+                _isReady = false;
                 CallLift();
             }
             if (other.transform.parent == null)

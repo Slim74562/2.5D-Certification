@@ -8,6 +8,7 @@ public class UpperDoor : MonoBehaviour
     private MeshRenderer _renderer;
     [SerializeField]
     private BoxCollider _boxCollider;
+    private LiftDoor _liftDoor;
 
     private void Start()
     {
@@ -26,6 +27,12 @@ public class UpperDoor : MonoBehaviour
         if (_boxCollider == null)
         {
             Debug.LogError("Box Collider on UpperDoor is Null");
+        }
+
+        _liftDoor = GameObject.FindGameObjectWithTag("Lift_Door").GetComponent<LiftDoor>();
+        if (_liftDoor == null)
+        {
+            Debug.LogError("Lift Door on UpperDoor is Null");
         }
 
     }
@@ -49,13 +56,14 @@ public class UpperDoor : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if (_lift.IsLiftUp())
+                if (_lift.GetFloorNumber() == 0)
                 {
                     OpenDoor();
+                    _liftDoor.OpenDoor();
                 }
                 else
                 {
-                    _lift.CallLift();
+                    _lift.CallLift(0);
                 }
             }
         }

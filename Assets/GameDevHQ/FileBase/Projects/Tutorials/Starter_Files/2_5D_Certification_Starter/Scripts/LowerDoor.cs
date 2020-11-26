@@ -8,6 +8,7 @@ public class LowerDoor : MonoBehaviour
     private MeshRenderer _renderer;
     [SerializeField]
     private BoxCollider _boxCollider;
+    private LiftDoor _liftDoor;
 
     private void Start()
     {
@@ -28,6 +29,11 @@ public class LowerDoor : MonoBehaviour
             Debug.LogError("Box Collider on LowerDoor is Null");
         }
 
+        _liftDoor = GameObject.FindGameObjectWithTag("Lift_Door").GetComponent<LiftDoor>();
+        if (_liftDoor == null)
+        {
+            Debug.LogError("Lift Door on LowerDoor is Null");
+        }
     }
 
     public void CloseDoor()
@@ -48,13 +54,14 @@ public class LowerDoor : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if (!_lift.IsLiftUp())
+                if (_lift.GetFloorNumber() == 2)
                 {
                     OpenDoor();
+                    _liftDoor.OpenDoor();
                 }
                 else
                 {
-                    _lift.CallLift();
+                    _lift.CallLift(2);
                 }
             }
         }
