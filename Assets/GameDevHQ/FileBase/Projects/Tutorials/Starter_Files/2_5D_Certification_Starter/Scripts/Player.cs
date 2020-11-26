@@ -15,6 +15,13 @@ public class Player : MonoBehaviour
     private bool _isHanging;
     private bool _isClimbing;
     private bool _isRolling;
+    [SerializeField]
+    private bool _isLadderClimbing;
+    [SerializeField]
+    private float _climbSpeed = 3.0f;
+    private float _originH;
+    [SerializeField]
+    private bool _climbUp;
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +54,7 @@ public class Player : MonoBehaviour
     {
         if (_controller.isGrounded)
         {
+
             float horizontal = Input.GetAxisRaw("Horizontal"); // get axis raw will make it automatically go to 1, -1, or 0 right away instead of gradually going to them
             _anim.SetFloat("Speed", Mathf.Abs(horizontal));
 
@@ -60,25 +68,19 @@ public class Player : MonoBehaviour
                 _isRolling = false;
                 _anim.SetBool("IsRolling", _isRolling);
             }
+            if (!_isLadderClimbing)
+            {
+                _originH = horizontal;
+            }
 
             _direction = new Vector3(0, 0, horizontal) * _speed;
 
-            /* Character flip can also be done like this
-             * if (horizontal != 0)
-             * {
-             * Vector3 facingDirection = transform.localEulerAngles;
-             * facingDirection.y = _direction.z > 0 ? 0 : 180;
-             * transform.localEulerAngles = facingDirection;
-             * }
-             */
-
-            if (horizontal > 0)
+            if (horizontal != 0 && !_isLadderClimbing)
             {
-                transform.rotation = Quaternion.LookRotation(Vector3.forward);
-            }
-            else if (horizontal < 0)
-            {
-                transform.rotation = Quaternion.LookRotation(Vector3.back);
+                Vector3 facingDirection = transform.localEulerAngles;
+                facingDirection.x = 0;
+                facingDirection.y = _direction.z > 0 ? 0 : 180;
+                transform.localEulerAngles = facingDirection;
             }
 
             if (Input.GetKey(KeyCode.Space))
@@ -87,7 +89,8 @@ public class Player : MonoBehaviour
                 _direction.y += _jumpHeight;
                 _isJumping = true;
                 _anim.SetBool("IsJumping", _isJumping);
-            }  
+            }
+
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 _isRolling = true;
@@ -99,10 +102,47 @@ public class Player : MonoBehaviour
         {
             _direction.y -= _gravity * Time.deltaTime;
         }
-        if (_controller.enabled == true)
-        {
+
+        if (_controller.enabled == true && !_isLadderClimbing)
+        {            
             _controller.Move(_direction * Time.deltaTime);
         }
+        if (_isLadderClimbing)
+        {
+            Vector3 ladderAngle = transform.localEulerAngles, movement;
+            ladderAngle.x = 30;
+            
+            if (_climbUp)
+            {
+                movement = new Vector3(0, 1.25f, _originH);
+                _controller.Move(movement * _climbSpeed * Time.deltaTime);
+                ladderAngle.y = 180;
+            }
+            else
+            {
+                movement = new Vector3(0, -1.5f, -_originH/5);
+                transform.Translate(movement * _climbSpeed * Time.deltaTime);
+                ladderAngle.y = 180;
+            }
+            transform.localEulerAngles = ladderAngle;
+        }
+    }
+
+    public void SetLadderClimb(bool isLadderClimbing, Vector3 ladderPos, float ySize)
+    {
+        
+        _isLadderClimbing = isLadderClimbing;    
+        if (_isLadderClimbing)
+        {
+            if (ladderPos.y + (ySize / 2) > transform.position.y)
+            {
+                _climbUp = true;
+            }
+            else
+            {
+                _climbUp = false;
+            }
+        }        
     }
 
     IEnumerator SpeedPowerDown()
@@ -113,7 +153,8 @@ public class Player : MonoBehaviour
 
     public void SpeedPowerup()
     {
-        _speed *= 2;        
+        _speed *= 2;
+        StartCoroutine(SpeedPowerDown());
     }
 
     public void RollReset()
