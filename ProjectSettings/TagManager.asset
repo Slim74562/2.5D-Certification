@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ledge_Grab_Checker
   - Lift_Floor
+  - Lift_Door
   layers:
   - Default
   - TransparentFX
